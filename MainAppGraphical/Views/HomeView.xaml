@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="MainAppGraphical.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainAppGraphical.Views"
+             xmlns:viewmodels="clr-namespace:MainAppGraphical.ViewModels"
+             xmlns:models="clr-namespace:Resources.Models;assembly=Resources"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1400">
+    
+    <Grid Background="MistyRose" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            
+        </Grid.ColumnDefinitions>
+        
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Left" FontWeight="SemiBold" Width="140" Margin="0,0,12,0" Content="Product name" />
+                <Label HorizontalContentAlignment="Left" FontWeight="SemiBold" Width="60" Margin="0,0,12,0" Content="Price" />
+                <Label HorizontalContentAlignment="Left" FontWeight="SemiBold" Width="60" Margin="0,0,12,0" Content="Stock"/>
+                <Label HorizontalContentAlignment="Left" FontWeight="SemiBold" Width="240" Margin="0,0,12,0" Content="Id"/>
+            </StackPanel>
+            <ListView x:Name="LvProducts" ItemsSource="{Binding Products}" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            
+                        </Grid.ColumnDefinitions>
+
+                        
+                            <TextBlock HorizontalAlignment="Center" Width="140" FontWeight="SemiBold" Margin="0,0,12,0" Grid.Column="0" Text="{Binding ProductName}" />
+                            <TextBlock HorizontalAlignment="Center" Width="60" FontWeight="SemiBold" Margin="0,0,12,0" Grid.Column="1" Text="{Binding ProductPrice}" />
+                            <TextBlock HorizontalAlignment="Center" Width="60" FontWeight="SemiBold" Margin="0,0,12,0" Grid.Column="2" Text="{Binding StockCount}" />
+                            <TextBlock HorizontalAlignment="Center" Width="240" FontWeight="Light" Margin="0,0,12,0" Grid.Column="3" Text="{Binding ProdudctId}" />
+                            
+                        </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>    
+        </ListView>
+            <StackPanel Margin="0,4,0,0" Grid.Row="2" Orientation="Horizontal">
+
+
+                <Button x:Name="BtnUndo" Content="Undo" Background="MediumPurple" FontSize="18" FontWeight="Bold" Padding="4" Margin="0,0,8,0"  Command="{Binding UndoCommand}"/>
+                <Button x:Name="BtnRemove" Content="Remove" Background="MediumPurple" FontSize="18" FontWeight="Bold" Padding="4" Margin="0,0,8,0" Command="{Binding RemoveCommand}" CommandParameter="{Binding ElementName=LvProducts, Path=SelectedItem}"/>
+                <Button x:Name="BtnUpdate" Content="Update" Background="MediumPurple" FontSize="18" FontWeight="Bold" Padding="4" Margin="0,0,8,0" Command="{Binding UpdateCommand}" CommandParameter="{Binding ElementName=LvProducts, Path=SelectedItem }"/>
+            </StackPanel>
+        
+    </Grid>
+        <Grid Grid.Column="0" Margin="8,4,8,4">
+            <StackPanel x:Name="InputFields" Margin="6">
+                <Label FontWeight="SemiBold" FontSize="16" Content="Product name" />
+                <TextBox x:Name="InputProductName" Text="{Binding Path=SelectedProduct.ProductName}">
+                    
+                </TextBox>
+                <Label FontWeight="SemiBold" FontSize="16" Foreground="Crimson" x:Name="NameValidationMsg" Content="{Binding NameMsg}"/>
+
+                <Label FontWeight="SemiBold" FontSize="16" Content="Product Price"/>
+                <TextBox x:Name="InputProductPrice" Text="{Binding Path=SelectedProduct.ProductPrice}">
+                    
+                </TextBox>
+                <Label FontWeight="SemiBold" FontSize="16" Foreground="Crimson" x:Name="PriceValidationMsg" Content="{Binding PriceMsg}"/>
+
+                <Label FontWeight="SemiBold" FontSize="16" Content="Stock count" />
+                <TextBox x:Name="InputStockCount" Text="{Binding Path=SelectedProduct.StockCount}">
+                    
+                </TextBox>
+                <Label FontWeight="SemiBold" FontSize="16" Foreground="Crimson" x:Name="StockValidationMsg" Content="{Binding StockMsg}"/>
+
+                <Button x:Name="BtnSave" Background="MediumPurple" Content="{Binding SaveText}" FontSize="18" FontWeight="Bold" Command="{Binding SaveProductCommand}" Margin="5" HorizontalContentAlignment="Center" />
+                <Button x:Name="BtnCancel" Background="MediumPurple" Content="Cancel" FontSize="18" FontWeight="Bold" Command="{Binding CancelCommand}" Margin="5" HorizontalContentAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+    
+</UserControl>
